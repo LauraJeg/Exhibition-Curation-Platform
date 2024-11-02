@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { fetchData } from './api'; 
+const axios = require('axios');
+
+
 
 jest.mock('axios');
 
