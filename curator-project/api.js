@@ -30,14 +30,30 @@ export const fetchData = async () => {
     throw error; 
   }
 };
-
-export const testMetQueryAPI = () => {
-  return axios
-    .get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=Longacre')
+export const metSearchByObjectID = (objectID) => {
+  return axios 
+    .get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
     .then(({ data }) => {
       return data;
     })
     .catch((error) => {
-      console.error("here", error);
+      console.error('Error fetching artworks:', error);
+      throw error; 
+    });
+}
+
+export const testMetQueryAPI = () => {
+  return axios
+    .get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=Longacre')
+    .then(({ artObjArr }) => {
+      artObjArr.forEach((art)=> {
+        //for each ID put into function to grab whole obj
+        //then add to a new arr
+      })
+      return data;
+    })
+    .catch((error) => {
+      console.error('Error fetching artworks:', error);
+      throw error; 
     });
 };
