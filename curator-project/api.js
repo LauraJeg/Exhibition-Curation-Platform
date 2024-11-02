@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchData = async () => {
+export const fetchData = async () => {
   try {
     const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects');
     console.log(response.data); 
@@ -8,8 +8,8 @@ const fetchData = async () => {
     console.error('Error fetching data:', error); 
   }
 };
-fetchData();
-const fetchFirst10Artworks = async () => {
+
+ export const fetchFirst10Artworks = async () => {
   try {
     const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects');
     
