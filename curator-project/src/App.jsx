@@ -1,21 +1,23 @@
-import { useState } from 'react'
-import { fetchFirst10Artworks } from '../api';
+import { useState, useEffect } from 'react'
+import { testMetQueryAPI } from '../api';
 
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [article, setArticle]= useState({});
-  fetchFirst10Artworks().then((articles)=>{
-    console.log(articles)
-    setArticle(articles);
-    console.log(article[0].artistDisplayBio)
-  })
+  useEffect(() => {
+    testMetQueryAPI()
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
       <p className="read-the-docs">
-        {article[0].artistDisplayBio}
+        hello
       </p>
     </>
   )

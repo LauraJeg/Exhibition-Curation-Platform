@@ -31,11 +31,13 @@ export const fetchData = async () => {
   }
 };
 
-// Example usage
-fetchFirst10Artworks()
-  .then(artworks => {
-    console.log('First 10 Artworks:', artworks);
-  })
-  .catch(error => {
-    console.error('Error:', error.message);
-  });
+export const testMetQueryAPI = () => {
+  return axios
+    .get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=Longacre')
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("here", error);
+    });
+};
