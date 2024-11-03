@@ -1,51 +1,16 @@
 import axios from 'axios';
 
-export const fetchDataMet = async () => {
-  try {
-    const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects');
-    console.log(response.data); 
-  } catch (error) {
-    console.error('Error fetching data:', error); 
-  }
-};
-export const metSearchByObjectID = (objectID) => {
-  return axios 
-    .get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((error) => {
-      console.error('Error fetching artworks:', error);
-      throw error; 
-    });
-}
+const VAAPI = axios.create({
+  baseURL: `https://api.vam.ac.uk/v2/objects/search`
+});
+const clevAPI = axios.create({
+  baseURL: `https://openaccess-api.clevelandart.org/api/artworks/`
+});
 
-export const MetAddDataToObj = (artObjIDArr) => {
-    const artObj = [];
-    artObjIDArr.forEach((objectID)=> {
-      metSearchByObjectID(objectID).then((art)=> artObj.push(art))
-    })
-    return artObj
-}
-
-export const testMetQueryAPI = () => {
-  return axios
-    .get('https://api.vam.ac.uk/v2/objects/search?id_material=AAT45514')
-    .then(( {data} ) => {   
-      console.log(data)
-      return data
-    })
-    .catch((error) => {
-      console.error('Error fetching artworks: Here', error);
-      throw error; 
-    });
-};
-
-export const clevApiTest = () => {
-  return axios
-  .get(`https://openaccess-api.clevelandart.org/api/artworks/?q=William+E.+Smith`)
+export const VAApiTest2 = () => {
+  return VAAPI.get(`?q_actor=gogh`)
   .then (({data})=> {
-    console.log(data.data)
+
     return data.data
   })
   .catch((error) => {
@@ -55,6 +20,41 @@ export const clevApiTest = () => {
   
 }
 
-export const testBothAPI = (params) => {
-  const 
+
+export const clev2ApiTest = () => {
+  return clevAPI.get(`?artists=picasso`)
+  .then (({data})=> {
+
+    return data.data
+  })
+  .catch((error) => {
+    console.error('Error fetching artworks:', error);
+    throw error; 
+  });
+  
 }
+
+
+
+
+
+export const testBothAPI = (params) => {
+  const clevFormatting = params.split(" ").join("+");
+  const clevPromise = clevAPI.get(`?artists=${clevFormatting}&limit=10`);
+  //artist=${clevFormatting}
+
+  const VAPromise = VAAPI.get(`?q_actor=${params}`);
+  //q_actor=${params}
+
+  return Promise.all([clevPromise, VAPromise]).then((results) => {
+    const data = {
+      clevData: results[0].data,
+      VAData: results[1].data.records,
+    };
+    // console.log(results[0].data.data)
+    // console.log(results[1].data.records)
+    console.log(data)
+    return data;
+  });
+}
+testBothAPI('picasso')

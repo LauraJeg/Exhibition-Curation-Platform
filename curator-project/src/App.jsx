@@ -1,18 +1,10 @@
 import { useState, useEffect } from 'react'
-import { clevApiTest, testMetQueryAPI } from '../api';
+import {  } from '../api';
 
 import './App.css'
 
 function App() {
   useEffect(() => {
-    testMetQueryAPI()
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      // clevApiTest()
   }, []);
 
   return (
