@@ -30,19 +30,20 @@ export const MetAddDataToObj = (artObjIDArr) => {
 
 export const testMetQueryAPI = () => {
   return axios
-    .get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=Longacre')
+    .get('https://api.vam.ac.uk/v2/objects/search?id_material=AAT45514')
     .then(( {data} ) => {   
-      return MetAddDataToObj(data.objectIDs);
+      console.log(data)
+      return data
     })
     .catch((error) => {
-      console.error('Error fetching artworks:', error);
+      console.error('Error fetching artworks: Here', error);
       throw error; 
     });
 };
 
 export const clevApiTest = () => {
   return axios
-  .get(`https://openaccess-api.clevelandart.org/api/artworks/?q=song%20xu&skip=2&limit=1&indent=1`)
+  .get(`https://openaccess-api.clevelandart.org/api/artworks/?q=William+E.+Smith`)
   .then (({data})=> {
     console.log(data.data)
     return data.data
@@ -52,4 +53,8 @@ export const clevApiTest = () => {
     throw error; 
   });
   
+}
+
+export const testBothAPI = (params) => {
+  const 
 }
