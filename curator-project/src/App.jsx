@@ -12,7 +12,7 @@ function App() {
       setIsLoading(false);
     });
   }, []);
-  isLoading===false?console.log(results.clevData[0].images):console.log('no')
+  isLoading===false?console.log(results):console.log('no')
 
   return (
     <>
@@ -27,10 +27,19 @@ function App() {
               </div>
             );
           })}
-             
-              </>):
-              <p></p>
-          } 
+          {results.VAData.map((art) => {
+              return (
+                <div key={art.systemNumber}>
+                  <h2>{art._currentLocation.displayName}</h2>
+                  <img src={results.VAData[0].images?.web?.url} alt={art.title} />
+                </div>
+              );
+            })}
+          </>):
+          <p>nothing</p>
+          }
+          
+          
       {/* {results.clevData.length > 0 || results.VAData.length? (
         <>
           {" "}
@@ -51,9 +60,7 @@ function App() {
             );
           })} */}
         </>
-  //     ) : (
-  //       <p>Nothing to display</p>
-  //     )}
+  //     
 
   )
 }
@@ -64,3 +71,9 @@ export default App
 <h2>{results.clevData[0].title}</h2>
 <img src={results.clevData[0].images?.web?.url} alt={results.clevData[0].title} />
 </div> */}
+
+// 
+   
+//     </>):
+//     <p></p>
+// } 

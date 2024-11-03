@@ -46,6 +46,13 @@ export const testBothAPI = (params) => {
   const VAPromise = VAAPI.get(`?q_actor=${params}`);
   
   return Promise.all([clevPromise, VAPromise]).then((results) => {
+    let datacheck = ''
+    const VAdata = []
+    results[1].data.records.forEach(element => {
+      element._currentLocation.id !== datacheck? 
+        (VAdata.push(results[1].data.records)
+        ):;
+    });
     const data = {
       clevData: results[0].data.data,
       VAData: results[1].data.records,
@@ -53,3 +60,4 @@ export const testBothAPI = (params) => {
     return data;
   });
 }
+
