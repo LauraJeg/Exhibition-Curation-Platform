@@ -1,79 +1,21 @@
-import { useState, useEffect } from 'react'
-import { testBothAPI } from '../api';
 
-import './App.css'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NavBar from './Components/Header';
+import Home from './Components/Home';
+import Exhibition from './Components/Exhibition';
+import About from './Components/About';
 
-function App() {
-  const [results, setResults] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    testBothAPI('picasso').then((res) => {
-      setResults(res);
-      setIsLoading(false);
-    });
-  }, []);
-  isLoading===false?console.log(results):console.log('no')
-
-  return (
-    <>
-
-          {isLoading === false? (
-            <>
-            {results.clevData.map((art) => {
-            return (
-              <div key={art.id}>
-                <h2>{art.title}</h2>
-                <img src={art.images?.web?.url} alt={art.title} />
-              </div>
-            );
-          })}
-          {results.VAData.map((art) => {
-              return (
-                <div key={art.systemNumber}>
-                  <h2>{art._currentLocation.displayName}</h2>
-                  <img src={results.VAData[0].images?.web?.url} alt={art.title} />
-                </div>
-              );
-            })}
-          </>):
-          <p>nothing</p>
-          }
-          
-          
-      {/* {results.clevData.length > 0 || results.VAData.length? (
-        <>
-          {" "}
-          {results.clevData.map((art) => {
-            return (
-              <div key={art.id}>
-                <h2>{art.title}</h2>
-                <img src={art.images?.web?.url} alt={art.title} />
-              </div>
-            );
-          })} */}
-          {/* {results.artObjects.map((result) => {
-            return (
-              <div key={result.id}>
-                <h2>{result.title}</h2>
-                <img src={result.webImage.url} alt={result.title} />
-              </div>
-            );
-          })} */}
-        </>
-  //     
-
-  )
-}
+const App = () => {
+    return (
+        <Router>
+            <NavBar />
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/exhibition" component={Exhibition} />
+                <Route path="/about" component={About} />
+            </Switch>
+        </Router>
+    );
+};
 
 export default App
-
-{/* <div key={results.clevData[0].id}>
-<h2>{results.clevData[0].title}</h2>
-<img src={results.clevData[0].images?.web?.url} alt={results.clevData[0].title} />
-</div> */}
-
-// 
-   
-//     </>):
-//     <p></p>
-// } 
