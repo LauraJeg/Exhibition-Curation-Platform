@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
 import { getOneClevArt, getOneVAArt } from '../../../api/api';
+import { parsingClevData } from '../../Utils/api_util';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -48,7 +49,7 @@ const ClevWorkingCard = () => {
     //testing with one artwork
     useEffect(() => {
     getOneClevArt('1953.424').then((res)=> {
-            setResults(res);
+            setResults(parsingClevData(res));
             setIsLoading(false);
         });
     }, []);
@@ -63,7 +64,7 @@ const ClevWorkingCard = () => {
           <>
   
           {isLoading === false? (
-          <Card key = {results.accession_number} 
+          <Card key = {results.key} 
               sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
                   backgroundColor: '#ebe6e3'}}>
           <CardHeader
@@ -76,18 +77,18 @@ const ClevWorkingCard = () => {
             <CardMedia
               component="img"
               height="194"
-              image={results.images.web.url}
+              image={results.image}
               alt="Paella dish"
             />
                       <CardContent>
             <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
-            {`Dated: ${results.creation_date}`}
+            {`Dated: ${results.creationDate}`}
             </Typography>
             <Typography sx={{ marginBottom: 2, color: 'text.secondary'  }}>
                  {`Type: ${results.type}`}
             </Typography>
               <Typography sx={{ marginBottom: 2 , color: 'text.secondary' }}>
-                {results.exhibitions.current.length !== 0? 'This piece is displayed in the museum now':'This piece is in storage'}
+                {results.onDisplay}
               </Typography>
           </CardContent>
           <CardActions disableSpacing>
