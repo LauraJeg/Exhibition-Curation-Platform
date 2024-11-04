@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { mainSidebarItems,  categoriesSidebarItems} from './consts/sidebarItems';
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link} from "react-router-dom";
 
 
 const Sidebar = () => {
@@ -30,13 +30,29 @@ const Sidebar = () => {
       <Toolbar />
       <Divider />
       <List>
-        {mainSidebarItems.map(({id, label, route}) => (
-          <ListItem button="true" key={id}  onClick={() => navigate(route)} >
+        
+          <ListItem button="true" key={'home'} >
+          <Link to='/home'>
             <ListItemButton>
-              <ListItemText primary={label} />
+              <ListItemText primary='Home' />
+            </ListItemButton>
+            </Link>
+          </ListItem>
+
+          <Link to='/about'>
+          <ListItem button="true" key={'about'} >
+            <ListItemButton>
+              <ListItemText primary='About' />
             </ListItemButton>
           </ListItem>
-        ))}
+          </Link>
+          <Link to='/exhibition'>
+          <ListItem button="true" key={'exhibition'} >
+            <ListItemButton>
+              <ListItemText primary='Your Exhibition' />
+            </ListItemButton>
+          </ListItem>
+          </Link>
       </List>
       <Divider />
       <List>

@@ -9,16 +9,22 @@ import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
-    <><Grid container>
-    <Sidebar />
-    <Outlet />
-    <Routes>
-            <Route path="/" exact component={Home} />
-            <Route path="/exhibition" component={Exhibition} />
-            <Route path="/about" component={About} />
+<>
+         <Routes>
+      <Route
+            element={<>
+                    <Sidebar />
+                <Outlet />
+                </>
+            }
+          >
+ 
+            <Route path="/" element={<Home/>} />
+            <Route path="/exhibition" element={<Exhibition/>} />
+            <Route path="/about" element={<About/>} />
+            <Route path="/home" element={<Home/>} />
+            </Route>
         </Routes>
-  </Grid>
-        
         </>
 );
 };
