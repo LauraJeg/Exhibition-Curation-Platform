@@ -14,6 +14,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useState, useEffect } from 'react'
+import { getOneVAArt } from '../../../api/api';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,6 +43,16 @@ const ExpandMore = styled((props) => {
   
     
 const CommonArtCard = () => {
+    const [results, setResults] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+    React.useEffect(() => {
+    getOneVAArt('O1173325').then((res)=> {
+            setResults(res.records[0]);
+            setIsLoading(false);
+        });
+    }, []);
+    isLoading===false?console.log(results):console.log('no')
+
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -65,7 +77,7 @@ const CommonArtCard = () => {
           <CardMedia
             component="img"
             height="194"
-            image="./assets/museumcurator.jpg"
+            image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.0mHu1hb9RgR8W5MUIh75KwHaFW%26pid%3DApi&f=1&ipt=88f2089cb71b3ac047c71a062ab03dce3d28d0a2c2cc4e92a80941060c45045a&ipo=images"
             alt="Paella dish"
           />
           <CardContent>

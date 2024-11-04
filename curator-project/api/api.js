@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const VAAPI = axios.create({
-  baseURL: `https://api.vam.ac.uk/v2/objects/search`
+  baseURL: `https://api.vam.ac.uk/v2/objects/search?q=`
 });
 const clevAPI = axios.create({
   baseURL: `https://openaccess-api.clevelandart.org/api/artworks/`
