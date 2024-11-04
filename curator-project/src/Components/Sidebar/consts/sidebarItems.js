@@ -25,3 +25,5 @@ export const categoriesSidebarItems = [
         route:'route'
     }
 ]
+
+export const museumList = ['V & A', 'Cleveland Museum of Art']
