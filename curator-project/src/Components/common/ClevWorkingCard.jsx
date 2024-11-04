@@ -10,10 +10,12 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
 import { getOneClevArt, getOneVAArt } from '../../../api/api';
 import { parsingClevData , parsingVAData} from '../../Utils/api_util';
+import Loading from './Loading';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -46,8 +48,28 @@ const ClevWorkingCard = () => {
     const [results, setResults] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
+    const [toggledFavourites, isToggledFavourites] = useState(fetchStoredData);
+
+    function fetchStoredData() {
+        const storedData = localStorage.getItem("artworks");
+        return storedData ? JSON.parse(storedData) : [];
+      }
+      function handleFavourite(art) {
+        let updatedFavourites = [...toggledFavourites];
+        const found = updatedFavourites.some((item) => item.key === art.key);
+        if (!found) {
+          updatedFavourites = [...updatedFavourites, art];
+        } else {
+          updatedFavourites = updatedFavourites.filter(
+            (item) => item.key !== art.key
+          );
+        }
+        isToggledFavourites(updatedFavourites);
+        localStorage.setItem("artworks", JSON.stringify(updatedFavourites));
+      }
     //testing with one artwork
     useEffect(() => {
+ 
     getOneVAArt('O205446').then((res)=> {
             setResults(parsingVAData(res));
             setIsLoading(false);
@@ -59,7 +81,8 @@ const ClevWorkingCard = () => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
       };
-      
+      const storedData = localStorage.getItem("artworks");
+      console.log(storedData)
       return (
           <>
   
@@ -92,8 +115,12 @@ const ClevWorkingCard = () => {
               </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton onClick={() => handleFavourite(results)} aria-label="add to favorites">
+            {toggledFavourites.some((item) => item.key === results.key) ? (
+                    <FavoriteIcon />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
             </IconButton>
 {/* expand */}
             <ExpandMore
@@ -105,6 +132,8 @@ const ClevWorkingCard = () => {
               <ExpandMoreIcon />
             </ExpandMore>
           </CardActions>
+
+          {/* Description */}
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
             <Typography sx={{ color: 'text.secondary' }}>
@@ -114,7 +143,7 @@ const ClevWorkingCard = () => {
           </Collapse>
         </Card>
         ):
-        <p>nothing</p>
+        <Loading/>
         }
         </>
       );
