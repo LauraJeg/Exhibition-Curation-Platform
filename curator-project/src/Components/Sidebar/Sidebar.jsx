@@ -54,6 +54,13 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           </Link>
+          <Link to='/clev'>
+          <ListItem button="true" key={'clev'} >
+            <ListItemButton>
+              <ListItemText primary='Clev art' />
+            </ListItemButton>
+          </ListItem>
+          </Link>
       </List>
       <Divider />
       <List>
