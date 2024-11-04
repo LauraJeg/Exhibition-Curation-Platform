@@ -6,7 +6,6 @@ import Artworks from './Components/Pages/Artworks';
 import Sidebar from './Components/Sidebar/Sidebar';
 import Grid from '@mui/material/Grid2';
 import { Outlet } from "react-router-dom";
-import ClevArtworks from './Components/Pages/ClevArtworks';
 
 const App = () => {
   return (
@@ -25,7 +24,6 @@ const App = () => {
             <Route path="/exhibition" element={<Exhibition/>} />
             <Route path="/artworks" element={<Artworks/>} />
             <Route path="/home" element={<Home/>} />
-            <Route path="/clev" element={<ClevArtworks/>} />
             </Route>
         </Routes>
         </Grid>
