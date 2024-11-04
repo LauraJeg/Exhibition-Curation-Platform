@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
-import { getOneVAArt } from '../../../api/api';
+import { VAArtworkCollection, getOneVAArt } from '../../../api/api';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,20 +39,20 @@ const ExpandMore = styled((props) => {
 }));
   
     
-const CommonArtCard = () => {
+const CommonArtCard = ({terms}) => {
 
     const [results, setResults] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
     //testing with one artwork
     useEffect(() => {
-    getOneVAArt('O1173325').then((res)=> {
-            setResults(res.records[0]);
+    VAArtworkCollection(terms).then((res)=> {
+            setResults(res.records);
             setIsLoading(false);
         });
     }, []);
     isLoading===false?console.log(results):console.log('no')
-    isLoading===false?console.log(results._primaryImageID):console.log('noimg')
+    isLoading===false?console.log(''):console.log('noimg')
 
     const [expanded, setExpanded] = useState(false);
 
@@ -63,62 +63,62 @@ const CommonArtCard = () => {
         <>
 
         {isLoading === false? (
-        <Card key = {results.systemNumber} 
-            sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
-                backgroundColor: '#ebe6e3'}}>
+            <Card key = {results.systemNumber} 
+                sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
+                    backgroundColor: '#ebe6e3'}}>
 
-          <CardHeader
-            avatar={
-              <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
-            }
-            title={results._primaryTitle}
-            subheader={`Made by: ${results._primaryMaker.name}`}
-          />
+              <CardHeader
+                avatar={
+                  <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
+                }
+                title={results._primaryTitle}
+                subheader={`Made by: ${results._primaryMaker.name}`}
+              />
 
-          <CardMedia
-            component="img"
-            height="194"
-            image={`https://framemark.vam.ac.uk/collections/${results._primaryImageId}/full/600,400/0/default.jpg`}
-            alt="Paella dish"
-          />
+              <CardMedia
+                component="img"
+                height="194"
+                image={`https://framemark.vam.ac.uk/collections/${results._primaryImageId}/full/600,400/0/default.jpg`}
+                alt={`No image of ${results._primaryTitle} was provided`}
+              />
 
-          <CardContent>
+              <CardContent>
 
-            <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
-            {`Dated: ${results.accessionNumber}`}
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              No description provided for this piece.
-            </Typography>
-          </CardContent>
+                <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
+                {`Dated: ${results.accessionNumber}`}
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  No description was provided for this piece.
+                </Typography>
+              </CardContent>
 
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
+              <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
 
-{/* expand */}
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
+    {/* expand */}
+                <ExpandMore
+                  expand={expanded}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </ExpandMore>
 
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography sx={{ marginBottom: 2, color: 'text.secondary'  }}>
-                 {`Type: ${results.objectType}`}
-            </Typography>
-              <Typography sx={{ marginBottom: 2 , color: 'text.secondary' }}>
-                {results._currentLocation.onDisplay? 'This piece is displayed in the V&A now':'This piece is in storage'}
-              </Typography>
-            </CardContent>
-          </Collapse>
-        </Card>
+              </CardActions>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                  <Typography sx={{ marginBottom: 2, color: 'text.secondary'  }}>
+                    {`Type: ${results.objectType}`}
+                </Typography>
+                  <Typography sx={{ marginBottom: 2 , color: 'text.secondary' }}>
+                    {results._currentLocation.onDisplay? 'This piece is currently being displayed in the V&A':'This piece is in storage'}
+                  </Typography>
+                </CardContent>
+              </Collapse>
+            </Card>
         ):
         <p>nothing</p>
         }

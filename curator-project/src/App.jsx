@@ -2,7 +2,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from './Components/Pages/Home';
 import Exhibition from './Components/Pages/Exhibition';
-import About from './Components/Pages/About';
+import Artworks from './Components/Pages/Artworks';
 import Sidebar from './Components/Sidebar/Sidebar';
 import Grid from '@mui/material/Grid2';
 import { Outlet } from "react-router-dom";
@@ -22,7 +22,7 @@ const App = () => {
  
             <Route path="/" element={<Home/>} />
             <Route path="/exhibition" element={<Exhibition/>} />
-            <Route path="/about" element={<About/>} />
+            <Route path="/artworks" element={<Artworks/>} />
             <Route path="/home" element={<Home/>} />
             </Route>
         </Routes>

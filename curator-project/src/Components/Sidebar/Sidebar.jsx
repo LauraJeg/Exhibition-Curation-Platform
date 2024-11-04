@@ -40,10 +40,10 @@ const Sidebar = () => {
             </Link>
           </ListItem>
 
-          <Link to='/about'   style={{ textDecoration: "none"}}>
+          <Link to='/artworks'   style={{ textDecoration: "none"}}>
           <ListItem button="true" key={'about'} >
             <ListItemButton>
-              <ListItemText primary='About' />
+              <ListItemText primary='Artworks' />
             </ListItemButton>
           </ListItem>
           </Link>
