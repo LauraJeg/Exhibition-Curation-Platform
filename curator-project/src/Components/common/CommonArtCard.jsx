@@ -52,6 +52,7 @@ const CommonArtCard = () => {
         });
     }, []);
     isLoading===false?console.log(results):console.log('no')
+    isLoading===false?console.log(results._primaryImageID):console.log('noimg')
 
     const [expanded, setExpanded] = useState(false);
 
@@ -65,21 +66,24 @@ const CommonArtCard = () => {
         <Card key = {results.systemNumber} 
             sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
                 backgroundColor: '#ebe6e3'}}>
+
           <CardHeader
             avatar={
               <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
             }
             title={results._primaryTitle}
-            // subheader={`Dated: ${results.accessionNumber}`}
             subheader={`Made by: ${results._primaryMaker.name}`}
           />
+
           <CardMedia
             component="img"
             height="194"
-            image={results._images._primary_thumbnail}
+            image={`https://framemark.vam.ac.uk/collections/${results._primaryImageId}/full/600,400/0/default.jpg`}
             alt="Paella dish"
           />
+
           <CardContent>
+
             <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
             {`Dated: ${results.accessionNumber}`}
             </Typography>
@@ -87,10 +91,13 @@ const CommonArtCard = () => {
               No description provided for this piece.
             </Typography>
           </CardContent>
+
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               <FavoriteIcon />
             </IconButton>
+
+{/* expand */}
             <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -99,6 +106,7 @@ const CommonArtCard = () => {
             >
               <ExpandMoreIcon />
             </ExpandMore>
+
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
