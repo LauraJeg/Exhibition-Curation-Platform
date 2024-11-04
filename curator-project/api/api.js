@@ -22,9 +22,10 @@ export const getOneClevArt = (id) => {
 
 export const getOneVAArt = (id) => {
 
-  return VAAPI.get(`${id}`)
+  return axios.get(`https://api.vam.ac.uk/v2/objects/search?q=${id}`)
     .then((response) => {
-      return response.data;
+      console.log(response.data.records)
+      return response.data.records;
     })
     .catch((error) => {
       console.error('Error fetching artworks:', error);
