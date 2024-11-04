@@ -13,7 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
 import { getOneClevArt, getOneVAArt } from '../../../api/api';
-import { parsingClevData } from '../../Utils/api_util';
+import { parsingClevData , parsingVAData} from '../../Utils/api_util';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -48,18 +48,18 @@ const ClevWorkingCard = () => {
 
     //testing with one artwork
     useEffect(() => {
-    getOneClevArt('1953.424').then((res)=> {
-            setResults(parsingClevData(res));
+    getOneVAArt('O205446').then((res)=> {
+            setResults(parsingVAData(res));
             setIsLoading(false);
         });
     }, []);
     isLoading===false?console.log(results):console.log('no')
-    // isLoading===false?console.log(results._primaryImageID):console.log('noimg')
 
     const [expanded, setExpanded] = useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
       };
+      
       return (
           <>
   
@@ -69,7 +69,7 @@ const ClevWorkingCard = () => {
                   backgroundColor: '#ebe6e3'}}>
           <CardHeader
             avatar={
-              <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
+              <Avatar alt="V&A" src={results.avatar} aria-label="museumIcon"/>
             }
             title={results.title}
             subheader={`Made by: Unknown`}
