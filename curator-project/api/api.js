@@ -10,8 +10,9 @@ const clevAPI = axios.create({
 
 export const getOneClevArt = (id) => {
 
-  return clevAPI.get(`q=${id}`)
+  return clevAPI.get(`${id}`)
     .then((response) => {
+      console.log(response.data.data)
       return response.data.data;
     })
     .catch((error) => {
@@ -22,10 +23,10 @@ export const getOneClevArt = (id) => {
 
 export const getOneVAArt = (id) => {
 
-  return axios.get(`https://api.vam.ac.uk/v2/objects/search?q=${id}`)
+  return VAAPI.get(`q=${id}&images_exist=true`)
     .then((response) => {
       console.log(response.data.records)
-      return response.data.records;
+      return response.data.records[0];
     })
     .catch((error) => {
       console.error('Error fetching artworks:', error);
