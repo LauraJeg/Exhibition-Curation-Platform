@@ -5,12 +5,13 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { mainSidebarItems,  categoriesSidebarItems} from './consts/sidebarItems';
-import { useNavigate , Link} from "react-router-dom";
+import { categoriesSidebarItems} from './consts/sidebarItems';
+import { Link} from "react-router-dom";
+import LowerSidebar from './LowerSidebar';
 
 
 const Sidebar = () => {
-  const navigate = useNavigate();
+
     const drawerWidth = 150;
     return ( 
       <Drawer
@@ -39,7 +40,7 @@ const Sidebar = () => {
             </Link>
           </ListItem>
 
-          <Link to='/about'>
+          <Link to='/about'   style={{ textDecoration: "none"}}>
           <ListItem button="true" key={'about'} >
             <ListItemButton>
               <ListItemText primary='About' />
@@ -63,6 +64,7 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem>
         ))}
+         <LowerSidebar/>
       </List>
     </Drawer>
     );

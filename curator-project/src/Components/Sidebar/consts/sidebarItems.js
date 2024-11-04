@@ -16,10 +16,6 @@ export const mainSidebarItems = [
 ]
 
 export const categoriesSidebarItems = [
-    {id: 0,
-        label:'Museums',
-        route:'route'
-    },
     {id: 1,
         label:'Artist',
         route:'route'

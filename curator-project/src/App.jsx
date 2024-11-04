@@ -10,6 +10,7 @@ import { Outlet } from "react-router-dom";
 const App = () => {
   return (
 <>
+<Grid container>
          <Routes>
       <Route
             element={<>
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/home" element={<Home/>} />
             </Route>
         </Routes>
+        </Grid>
         </>
 );
 };
