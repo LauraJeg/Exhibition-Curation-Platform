@@ -49,6 +49,7 @@ const CommonArtCard = ({terms}) => {
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [toggledFavourites, isToggledFavourites] = useState(fetchStoredData);
+
     function fetchStoredData() {
       const storedData = localStorage.getItem("artworks");
       return storedData ? JSON.parse(storedData) : [];
@@ -65,6 +66,7 @@ const CommonArtCard = ({terms}) => {
       }
       isToggledFavourites(updatedFavourites);
       localStorage.setItem("artworks", JSON.stringify(updatedFavourites));
+      console.log(localStorage.artworks)
     }
 
     //multiple artworks
@@ -121,7 +123,7 @@ const CommonArtCard = ({terms}) => {
 
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton onClick={() => handleFavourite(results)} aria-label="add to favorites">
+      <IconButton onClick={() => handleFavourite(result)} aria-label="add to favorites">
             {toggledFavourites.some((item) => item.key === result.key) ? (
                     <FavoriteIcon />
                   ) : (
