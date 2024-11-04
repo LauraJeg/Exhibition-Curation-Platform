@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
 import { VAArtworkCollection, getOneVAArt } from '../../../api/api';
+import Grid from '@mui/material/Grid2';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -47,6 +48,7 @@ const CommonArtCard = ({terms}) => {
     //testing with one artwork
     useEffect(() => {
     VAArtworkCollection(terms).then((res)=> {
+      const arr = []
             setResults(res.records);
             setIsLoading(false);
         });
@@ -61,9 +63,13 @@ const CommonArtCard = ({terms}) => {
     };
     return (
         <>
+      {isLoading === false? (
+        <Grid container>
+          {results.map((result)=> {
+           { console.log(result)}
 
-        {isLoading === false? (
-            <Card key = {results.systemNumber} 
+          
+            <Card key = {result.systemNumber} 
                 sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
                     backgroundColor: '#ebe6e3'}}>
 
@@ -71,21 +77,21 @@ const CommonArtCard = ({terms}) => {
                 avatar={
                   <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
                 }
-                title={results._primaryTitle}
-                subheader={`Made by: ${results._primaryMaker.name}`}
+                title={result._primaryTitle}
+                subheader={`Made by: ${result._primaryMaker.name}`}
               />
 
               <CardMedia
                 component="img"
                 height="194"
-                image={`https://framemark.vam.ac.uk/collections/${results._primaryImageId}/full/600,400/0/default.jpg`}
-                alt={`No image of ${results._primaryTitle} was provided`}
+                image={`https://framemark.vam.ac.uk/collections/${result._primaryImageId}/full/600,400/0/default.jpg`}
+                alt={`No image of ${result._primaryTitle} was provided`}
               />
 
               <CardContent>
 
                 <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
-                {`Dated: ${results.accessionNumber}`}
+                {`Dated: ${result.accessionNumber}`}
                 </Typography>
                 <Typography sx={{ color: 'text.secondary' }}>
                   No description was provided for this piece.
@@ -111,14 +117,16 @@ const CommonArtCard = ({terms}) => {
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                   <Typography sx={{ marginBottom: 2, color: 'text.secondary'  }}>
-                    {`Type: ${results.objectType}`}
+                    {`Type: ${result.objectType}`}
                 </Typography>
                   <Typography sx={{ marginBottom: 2 , color: 'text.secondary' }}>
-                    {results._currentLocation.onDisplay? 'This piece is currently being displayed in the V&A':'This piece is in storage'}
+                    {result._currentLocation.onDisplay? 'This piece is currently being displayed in the V&A':'This piece is in storage'}
                   </Typography>
                 </CardContent>
               </Collapse>
             </Card>
+            })}
+            </Grid>
         ):
         <p>nothing</p>
         }
