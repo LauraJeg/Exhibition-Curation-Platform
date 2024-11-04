@@ -65,67 +65,60 @@ const CommonArtCard = ({terms}) => {
         <>
       {isLoading === false? (
         <Grid container>
-          {results.map((result)=> {
-           { console.log(result)}
+          {results.map((result) => {
+  console.log(result); // Keep your log if needed
 
-          
-            <Card key = {result.systemNumber} 
-                sx={{ maxWidth: 345 , m:4, backgroundcolor:'primary',
-                    backgroundColor: '#ebe6e3'}}>
+  return ( // Use 'return' here
+    <Card key={result.systemNumber} 
+          sx={{ maxWidth: 345, m: 4, backgroundColor: '#ebe6e3' }}>
+      <CardHeader
+        avatar={
+          <Avatar alt="V&A" src="../../../assets/V&Asymbol.jpg" aria-label="museumIcon" />
+        }
+        title={result._primaryTitle}
+        subheader={`Made by: ${result._primaryMaker.name}`}
+      />
+      <CardMedia
+        component="img"
+        height="194"
+        image={`https://framemark.vam.ac.uk/collections/${result._primaryImageId}/full/600,400/0/default.jpg`}
+        alt={`No image of ${result._primaryTitle} was provided`}
+      />
+      <CardContent>
+        <Typography variant="body2" align='right' sx={{ color: 'text.secondary', margin: 1, fontWeight: 'bold' }}>
+          {`Dated: ${result.accessionNumber}`}
+        </Typography>
+        <Typography sx={{ color: 'text.secondary' }}>
+          No description was provided for this piece.
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography sx={{ marginBottom: 2, color: 'text.secondary' }}>
+            {`Type: ${result.objectType}`}
+          </Typography>
+          <Typography sx={{ marginBottom: 2, color: 'text.secondary' }}>
+            {result._currentLocation.onDisplay ? 'This piece is currently being displayed in the V&A' : 'This piece is in storage'}
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
+  );
+})}
 
-              <CardHeader
-                avatar={
-                  <Avatar alt="V&A" src="'../../../assets/V&Asymbol.jpg" aria-label="museumIcon"/>
-                }
-                title={result._primaryTitle}
-                subheader={`Made by: ${result._primaryMaker.name}`}
-              />
-
-              <CardMedia
-                component="img"
-                height="194"
-                image={`https://framemark.vam.ac.uk/collections/${result._primaryImageId}/full/600,400/0/default.jpg`}
-                alt={`No image of ${result._primaryTitle} was provided`}
-              />
-
-              <CardContent>
-
-                <Typography variant="body2" align='right' sx={{ color: 'text.secondary' , margin: 1, fontWeight:'bold'}}>
-                {`Dated: ${result.accessionNumber}`}
-                </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  No description was provided for this piece.
-                </Typography>
-              </CardContent>
-
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-
-    {/* expand */}
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </ExpandMore>
-
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography sx={{ marginBottom: 2, color: 'text.secondary'  }}>
-                    {`Type: ${result.objectType}`}
-                </Typography>
-                  <Typography sx={{ marginBottom: 2 , color: 'text.secondary' }}>
-                    {result._currentLocation.onDisplay? 'This piece is currently being displayed in the V&A':'This piece is in storage'}
-                  </Typography>
-                </CardContent>
-              </Collapse>
-            </Card>
-            })}
             </Grid>
         ):
         <p>nothing</p>
