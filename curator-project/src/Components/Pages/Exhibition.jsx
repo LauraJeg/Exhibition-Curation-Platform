@@ -1,6 +1,8 @@
+import CommonArtCard from "../common/CommonArtCard"
+
 const Exhibition = () => {
-    return (<>
-    </>
+    console.log('here')
+    return (<CommonArtCard/>
     );
 };
 
