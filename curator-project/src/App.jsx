@@ -10,10 +10,9 @@ import { useState, useEffect } from 'react'
 import TopMenu from './Components/Navigation/TopBar';
 
 const App = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const handleApplyFilter = (categories) => {
-    setSelectedCategories(categories);
-  };
+  const [selectedCategories, setSelectedCategories] = useState([]); 
+  const [selectedMuseums, setSelectedMuseums] = useState([]); 
+  
   
   return (
 <>
@@ -22,7 +21,7 @@ const App = () => {
       <Route
             element={<>
             
-                    <Sidebar onApplyFilter={handleApplyFilter} />
+                    <Sidebar selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} selectedMuseums={selectedMuseums} setSelectedMuseums={setSelectedMuseums}/>
                     <TopMenu/>
                 <Outlet />
                 </>
@@ -31,7 +30,7 @@ const App = () => {
  
             <Route path="/" element={<Home/>} />
             <Route path="/exhibition" element={<Exhibition/>} />
-            <Route path="/artworks" element={<Artworks selectedCategories={selectedCategories}/>} />
+            <Route path="/artworks" element={<Artworks selectedCategories={selectedCategories} selectedMuseums={selectedMuseums}/>} />
             <Route path="/home" element={<Home/>} />
             </Route>
         </Routes>

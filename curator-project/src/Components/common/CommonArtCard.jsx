@@ -42,8 +42,7 @@ const ExpandMore = styled((props) => {
 }));
   
     
-const CommonArtCard = ({terms}) => {
-
+const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
     const [results, setResults] = useState();
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +68,9 @@ const CommonArtCard = ({terms}) => {
     combinedArtwork(terms)
     //multiple artworks
     useEffect(() => {
-      combinedArtwork(terms).then((res)=> {
+      console.log(terms)
+
+      combinedArtwork(terms, selectedCategories, selectedMuseums).then((res)=> {
             setResults(res);
             setIsLoading(false);
         }).catch((err)=>{

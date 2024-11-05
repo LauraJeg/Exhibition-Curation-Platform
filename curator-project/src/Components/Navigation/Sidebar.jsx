@@ -11,9 +11,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { categories, museums } from './consts/sidebarItems';
 
-const Sidebar = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]); 
-  const [selectedMuseums, setSelectedMuseums] = useState([]); 
+const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,selectedMuseums}) => {
   
   const handleSubmit = () => {
     alert('Selected categories have been submitted!');
