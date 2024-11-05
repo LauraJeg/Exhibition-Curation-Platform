@@ -84,7 +84,6 @@ const CommonArtCard = ({terms}) => {
       setExpanded(!expanded);
     };
     const storedData = localStorage.getItem("artworks");
-    console.log(isLoading)
 
     if (isLoading === true) {return (
       <Grid container sx={{ marginLeft: '150px' }}>

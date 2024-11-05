@@ -68,26 +68,48 @@ export const clevelandArtworkCollection =(terms) => {
   });
 }
 
-export const combinedArtwork = (terms)=> {
-  let clevelandQuery = "?q=1&has_image=1&limit=100"
-  terms.type ? (clevelandQuery += `&classification_type=${terms.type}`) : null;
-  const clevelandPromise = clevAPI.get(clevelandQuery)
+export const combinedArtwork = (terms) => {
+  const parsedData = [];
 
-  let VAQuery = `?page_size=100&images_exist=true&q=*`;
-  terms.type ? (VAQuery += `&q_object_type=${terms.type}`) : null;
-  terms.page && terms.page % 25 === 0 ? (VAQuery += `&page=${page / 25 + 1}`) : null;
-  const VAPromise = VAAPI.get(VAQuery)
-
-  return Promise.all([clevelandPromise,VAPromise]).then((res) => {
-    const parsedData = []
-    res[0].data.data.forEach(element => {
-      parsedData.push(parsingClevData(element))
+  // Check if Cleveland Museum of Art should be included
+  let clevelandPromise = Promise.resolve({ data: { data: [] } }); // Default empty array
+  if (terms.toggleCleveland) {
+    let clevelandQuery = "?q=1&has_image=1&limit=100";
+    if (terms.type) clevelandQuery += `&classification_type=${terms.type}`;
+    clevelandPromise = clevAPI.get(clevelandQuery).catch(error => {
+      console.error("Cleveland API Error:", error);
+      return { data: { data: [] } }; // Return empty data in case of error
     });
+  }
 
-    res[1].data.records.forEach(element => {
-      parsedData.push(parsingVAData(element))
+  // Check if Virtual Archive (VA) should be included
+  let VAPromise = Promise.resolve({ data: { records: [] } }); // Default empty array
+  if (terms.toggleVA) {
+    let VAQuery = `?page_size=100&images_exist=true&q=*`;
+    if (terms.type) VAQuery += `&q_object_type=${terms.type}`;
+    if (terms.page && terms.page % 25 === 0) VAQuery += `&page=${terms.page / 25 + 1}`;
+    VAPromise = VAAPI.get(VAQuery).catch(error => {
+      console.error("VA API Error:", error);
+      return { data: { records: [] } }; // Return empty data in case of error
     });
-    
+  }
+
+  // Use Promise.all to fetch data from both APIs (if active)
+  return Promise.all([clevelandPromise, VAPromise]).then((res) => {
+    // Parse Cleveland data if the request was made
+    if (terms.toggleCleveland) {
+      res[0].data.data.forEach(element => {
+        parsedData.push(parsingClevData(element));
+      });
+    }
+
+    // Parse VA data if the request was made
+    if (terms.toggleVA) {
+      res[1].data.records.forEach(element => {
+        parsedData.push(parsingVAData(element));
+      });
+    }
+
     return parsedData;
-  })
-}
+  });
+};
