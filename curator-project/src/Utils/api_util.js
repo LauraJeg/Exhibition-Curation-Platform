@@ -1,6 +1,6 @@
 export const parsingClevData = (art) => {
     const onDisplay = art.exhibitions.current.length !== 0? 'This piece is displayed in the Cleveland Museum now':'This piece is in storage'
-    const creator = art.creators.length === 0? 'Unknown': art.creators[0]
+    const creator = art.creators.length === 0? 'Unknown': art.creators[0].description
     return {
         museum : true,
         onDisplay : onDisplay,

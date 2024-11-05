@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { parsingClevData, parsingVAData } from '../src/Utils/api_util';
 
 const VAAPI = axios.create({
   baseURL: `https://api.vam.ac.uk/v2/objects/search?`
@@ -25,7 +26,6 @@ export const getOneVAArt = (id) => {
 
   return VAAPI.get(`q=${id}&images_exist=true`)
     .then((response) => {
-      console.log(response.data.records)
       return response.data.records[0];
     })
     .catch((error) => {
@@ -39,20 +39,38 @@ export const getOneVAArt = (id) => {
 
 export const VAArtworkCollection =(terms) => {
 
-//VA search query 
-  let VAQuery = `?page_size=100&images_exist=true`;
-  terms.query ? (VAQuery += `&q=${terms.query}`) : (vamQuery += `&q=*`);
+  let VAQuery = `?page_size=100&images_exist=true&q=*`;
   terms.type ? (VAQuery += `&q_object_type=${terms.type}`) : null;
   terms.page && terms.page % 25 === 0 ? (VAQuery += `&page=${page / 25 + 1}`) : null;
 
   return VAAPI.get(VAQuery)
   .then((response) => {
-    return response.data;
+    return response.data.records.map((item)=> {return parsingVAData(item)});
   })
   .catch((error) => {
     console.error('Error fetching artworks:', error);
     throw error; 
 });
 }
+
+export const clevelandArtworkCollection =(terms) => {
+
+  let clevelandQuery = "?q=1&has_image=1&limit=100"
+  terms.type ? (clevelandQuery += `&classification_type=${terms.type}`) : null;
+  terms.page && terms.page % 25 === 0
+    ? (clevelandQuery += `&skip=${(page / 25) * 100}`)
+    : null;
+    console.log(clevelandQuery)
+    return clevAPI.get(clevelandQuery)
+    .then((response) => {
+      return response.data.data.map((item)=> {return parsingClevData(item)});
+    })
+    .catch((error) => {
+      console.error('Error fetching artworks:', error);
+      throw error; 
+  });
+}
+
+
 
   // technique ? (vamQuery += `&q_material_technique=${technique}`) : null;

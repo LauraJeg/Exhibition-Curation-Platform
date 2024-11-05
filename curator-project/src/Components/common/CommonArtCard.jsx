@@ -13,7 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
-import { VAArtworkCollection, getOneVAArt } from '../../../api/api';
+import { VAArtworkCollection, getOneVAArt, clevelandArtworkCollection } from '../../../api/api';
 import Grid from '@mui/material/Grid2';
 import Loading from './Loading';
 import { parsingClevData, parsingVAData } from '../../Utils/api_util';
@@ -71,9 +71,9 @@ const CommonArtCard = ({terms}) => {
 
     //multiple artworks
     useEffect(() => {
-    VAArtworkCollection(terms).then((res)=> {
-      const parsedData = res.records.map((art)=> {return parsingVAData(art)})
-            setResults(parsedData);
+      clevelandArtworkCollection(terms).then((res)=> {
+        console.log(res)
+            setResults(res);
             setIsLoading(false);
         }).catch((err)=>{
             setError('Failed to load artwork data.');
