@@ -30,31 +30,6 @@ const Sidebar = () => {
     >
       <Toolbar />
       <Divider />
-      <List>
-        
-          <ListItem button="true" key={'home'} >
-          <Link to='/home'>
-            <ListItemButton>
-              <ListItemText primary='Home' />
-            </ListItemButton>
-            </Link>
-          </ListItem>
-
-          <Link to='/artworks'   style={{ textDecoration: "none"}}>
-          <ListItem button="true" key={'about'} >
-            <ListItemButton>
-              <ListItemText primary='Artworks' />
-            </ListItemButton>
-          </ListItem>
-          </Link>
-          <Link to='/exhibition'>
-          <ListItem button="true" key={'exhibition'} >
-            <ListItemButton>
-              <ListItemText primary='Your Exhibition' />
-            </ListItemButton>
-          </ListItem>
-          </Link>
-      </List>
       <Divider />
       <List>
         {categoriesSidebarItems.map(({id, label, route}) => (
