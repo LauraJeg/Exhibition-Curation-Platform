@@ -9,23 +9,12 @@ import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { categories, museums } from './consts/sidebarItems';
 
 const Sidebar = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); 
   const [selectedMuseums, setSelectedMuseums] = useState([]); 
-  const categories = [
-    "Paintings",
-    "Sculptures",
-    "Prints",
-    "Textiles",
-    "Ceramics",
-    "Photography",
-    "Drawings"
-  ];
-  const museums = [
-    'V&A',
-    'Cleveland'
-  ]
+  
   const handleSubmit = () => {
     alert('Selected categories have been submitted!');
   };

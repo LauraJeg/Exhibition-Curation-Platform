@@ -13,10 +13,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react'
-import { VAArtworkCollection, getOneVAArt, clevelandArtworkCollection } from '../../../api/api';
+import {clevelandArtworkCollection , combinedArtwork} from '../../../api/api';
 import Grid from '@mui/material/Grid2';
 import Loading from './Loading';
-import { parsingClevData, parsingVAData } from '../../Utils/api_util';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -66,13 +65,11 @@ const CommonArtCard = ({terms}) => {
       }
       isToggledFavourites(updatedFavourites);
       localStorage.setItem("artworks", JSON.stringify(updatedFavourites));
-      console.log(localStorage.artworks)
     }
-
+    combinedArtwork(terms)
     //multiple artworks
     useEffect(() => {
-      clevelandArtworkCollection(terms).then((res)=> {
-        console.log(res)
+      combinedArtwork(terms).then((res)=> {
             setResults(res);
             setIsLoading(false);
         }).catch((err)=>{
@@ -87,6 +84,13 @@ const CommonArtCard = ({terms}) => {
       setExpanded(!expanded);
     };
     const storedData = localStorage.getItem("artworks");
+    console.log(isLoading)
+
+    if (isLoading === true) {return (
+      <Grid container sx={{ marginLeft: '150px' }}>
+    <Loading  sx={{ marginLeft: '150px' }}/>
+    </Grid>)
+  }
 
     return (
         <>
@@ -99,7 +103,7 @@ const CommonArtCard = ({terms}) => {
           sx={{ maxWidth: 345, m: 4, backgroundColor: '#ebe6e3' }}>
       <CardHeader
         avatar={
-          <Avatar alt="V&A" src={result.avatar} aria-label="museumIcon" />
+          <Avatar alt="CM" src={result.avatar} aria-label="museumIcon" />
         }
         title={result.title}
         subheader={`Made by: ${result.creator}`}

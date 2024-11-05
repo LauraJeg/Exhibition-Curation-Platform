@@ -11,7 +11,7 @@ export const parsingClevData = (art) => {
         description: art.description,
         image : art.images.web.url,
         key: art.accession_number,
-        avatar: "'../../../assets/ClevSymbol.jpg",
+        avatar: "/home/mashca/northcoders/projects/Exhibition-Curation-Platform/curator-project/assets/ClevSymbol.jpeg",
     }
 }
 

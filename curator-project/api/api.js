@@ -57,9 +57,6 @@ export const clevelandArtworkCollection =(terms) => {
 
   let clevelandQuery = "?q=1&has_image=1&limit=100"
   terms.type ? (clevelandQuery += `&classification_type=${terms.type}`) : null;
-  terms.page && terms.page % 25 === 0
-    ? (clevelandQuery += `&skip=${(page / 25) * 100}`)
-    : null;
     console.log(clevelandQuery)
     return clevAPI.get(clevelandQuery)
     .then((response) => {
@@ -71,6 +68,26 @@ export const clevelandArtworkCollection =(terms) => {
   });
 }
 
+export const combinedArtwork = (terms)=> {
+  let clevelandQuery = "?q=1&has_image=1&limit=100"
+  terms.type ? (clevelandQuery += `&classification_type=${terms.type}`) : null;
+  const clevelandPromise = clevAPI.get(clevelandQuery)
 
+  let VAQuery = `?page_size=100&images_exist=true&q=*`;
+  terms.type ? (VAQuery += `&q_object_type=${terms.type}`) : null;
+  terms.page && terms.page % 25 === 0 ? (VAQuery += `&page=${page / 25 + 1}`) : null;
+  const VAPromise = VAAPI.get(VAQuery)
 
-  // technique ? (vamQuery += `&q_material_technique=${technique}`) : null;
+  return Promise.all([clevelandPromise,VAPromise]).then((res) => {
+    const parsedData = []
+    res[0].data.data.forEach(element => {
+      parsedData.push(parsingClevData(element))
+    });
+
+    res[1].data.records.forEach(element => {
+      parsedData.push(parsingVAData(element))
+    });
+    
+    return parsedData;
+  })
+}
