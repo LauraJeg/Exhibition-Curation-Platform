@@ -56,7 +56,7 @@ const Slideshow = () => {
     <div style={{ padding: '20px'}}>
         <Grid2 sx={{marginLeft:'150px'}}>
       <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: '20px' }}>
-        Artworks Slideshow
+        Artworks Exhibition
       </Typography>
 
       <Box sx={{ position: 'relative', textAlign: 'center', maxWidth: '90%', margin: '0 auto' }}>

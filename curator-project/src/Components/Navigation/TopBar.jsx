@@ -9,15 +9,15 @@ const TopMenu = () => {
   };
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#D7CEC7' }}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#D7CEC7', width: '100%', zIndex: 1300 }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <List sx={{ display: 'flex', flexDirection: 'row', padding: 0, margin: 0 }}>
             
             {/* Home Link */}
             <ListItem sx={{ padding: '0 20px' }}>
               <Link to='/home' style={linkStyle}>
-                <ListItemButton sx={{ fontSize: '6rem' }}>
+                <ListItemButton sx={{ fontSize: '2rem' }}>
                   <ListItemText primary='Home' />
                 </ListItemButton>
               </Link>
@@ -26,7 +26,7 @@ const TopMenu = () => {
             {/* Artworks Link */}
             <ListItem sx={{ padding: '0 20px' }}>
               <Link to='/artworks' style={linkStyle}>
-                <ListItemButton sx={{ fontSize: '6rem' }}>
+                <ListItemButton sx={{ fontSize: '2rem' }}>
                   <ListItemText primary='Artworks' />
                 </ListItemButton>
               </Link>
@@ -35,7 +35,7 @@ const TopMenu = () => {
             {/* Exhibition Link */}
             <ListItem sx={{ padding: '0 20px' }}>
               <Link to='/exhibition' style={linkStyle}>
-                <ListItemButton sx={{ fontSize: '6rem' }}>
+                <ListItemButton sx={{ fontSize: '2rem' }}>
                   <ListItemText primary='Your Exhibition' />
                 </ListItemButton>
               </Link>

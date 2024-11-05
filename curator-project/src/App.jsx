@@ -13,7 +13,6 @@ const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); 
   const [selectedMuseums, setSelectedMuseums] = useState([]); 
   
-  
   return (
 <>
 <Grid container>
