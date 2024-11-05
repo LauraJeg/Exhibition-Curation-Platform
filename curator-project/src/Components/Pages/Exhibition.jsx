@@ -1,11 +1,7 @@
+import ImageGallery from "../common/ImageGallery";
 
 const Exhibition = () => {
-
-        const storedData = localStorage.getItem("artworks");
-        console.log(storedData)
-        const parsedData = storedData ? JSON.parse(storedData) : [];
-      console.log(parsedData)
-    return (<></>
+    return (<><ImageGallery/></>
     );
 };
 
