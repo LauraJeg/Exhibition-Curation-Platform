@@ -15,7 +15,7 @@ const App = () => {
   
   return (
 <>
-<Grid container>
+<Grid container sx={{ width: '100%', zIndex: 1300 }}>
          <Routes>
       <Route
             element={<>

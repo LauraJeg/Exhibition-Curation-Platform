@@ -4,7 +4,8 @@ const terms = {query:"Laura",image_exists:true, page: 1,page_size:15, toggleClev
 
 const Artworks = ({selectedCategories, selectedMuseums}) => {
 
-    return (<><CommonArtCard terms = {terms} selectedCategories={selectedCategories} selectedMuseums={selectedMuseums}/>
+    return (<>
+    <CommonArtCard terms = {terms} selectedCategories={selectedCategories} selectedMuseums={selectedMuseums}/>
     </>
     );
 };
