@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Grid2, Typography, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Grid2, Typography, IconButton, Box } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const ImageGallery = () => {
+const Slideshow = () => {
   const [storedData, setStoredData] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
     const data = localStorage.getItem('artworks');
     if (data) {
       setStoredData(JSON.parse(data));
     }
-  }, []);
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setOpen(true);
+    const id = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % storedData.length);
+    }, 5000);  
+    setIntervalId(id);
+
+    return () => clearInterval(id);
+  }, [storedData]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % storedData.length);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + storedData.length) % storedData.length);
   };
 
   if (storedData.length === 0) {
@@ -31,65 +38,72 @@ const ImageGallery = () => {
     );
   }
 
+  const currentArtwork = storedData[currentIndex];
+
   return (
     <div style={{ padding: '20px' }}>
+        <Grid2  sx={{ marginLeft: '150px' }}>
       <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: '20px' }}>
-        Artworks Gallery
+        Artworks Exhibiton
       </Typography>
-      <Grid2 container spacing={2} sx={{ marginLeft: '150px', overflowX: 'auto', paddingBottom: '20px' }}>
-        {storedData.map((art, index) => (
-          <Grid2 item key={art.key} sx={{ minWidth: '300px' }}>
-            <div
-              style={{
-                background: '#f0f0f0',
-                padding: '10px',
-                borderRadius: '8px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <img
-                src={art.image}
-                alt={art.title}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                }}
-                onClick={() => handleImageClick(art.image)}
-              />
-              <Typography sx={{ textAlign: 'center', marginTop: '10px', fontWeight: 'bold' }}>
-                {art.title || 'Untitled'}
-              </Typography>
-              <Typography sx={{ textAlign: 'center', fontStyle: 'italic' }}>
-                {art.creator || 'Unknown'}
-              </Typography>
-            </div>
-          </Grid2>
-        ))}
-      </Grid2>
 
-      {/* Dialog for full-screen view */}
-      <Dialog open={open} onClose={handleClose} maxWidth="xl">
-        <DialogTitle>
-          <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <img
-            src={selectedImage}
-            alt="Large Artwork"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <button onClick={handleClose} style={{ margin: '10px' }}>Close</button>
-        </DialogActions>
-      </Dialog>
+      <Box sx={{ position: 'relative', textAlign: 'center', maxWidth: '90%', margin: '0 auto' }}>
+        {/* Image */}
+        <img
+          src={currentArtwork.image}
+          alt={currentArtwork.title}
+          style={{
+            width: '100%',
+            height: 'auto',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+
+        <Typography sx={{ textAlign: 'center', marginTop: '10px', fontWeight: 'bold' }}>
+          {currentArtwork.title || 'Untitled'}
+        </Typography>
+        <Typography sx={{ textAlign: 'center', fontStyle: 'italic' }}>
+          {currentArtwork.creator || 'Unknown'}
+        </Typography>
+
+        <IconButton
+          onClick={handlePrev}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '10px',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+
+        <IconButton
+          onClick={handleNext}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            right: '10px',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+          }}
+        >
+          <ArrowForwardIcon />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {`${currentIndex + 1} of ${storedData.length}`}
+        </Typography>
+      </Box>
+      </Grid2>
     </div>
   );
 };
 
-export default ImageGallery;
+export default Slideshow;
