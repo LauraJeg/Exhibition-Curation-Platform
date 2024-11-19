@@ -72,7 +72,7 @@ export const combinedArtwork = (terms, selectedCategories, selectedMuseums) => {
 console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   const parsedData = [];
   let clevelandPromise = Promise.resolve({ data: { data: [] } }); 
-  if (terms.toggleCleveland) {
+  if (selectedMuseums.indexOf('Cleveland') >= 0) {
     let clevelandQuery = "?q=1&has_image=1&limit=100";
     if (terms.type) clevelandQuery += `&classification_type=${terms.type}`;
     clevelandPromise = clevAPI.get(clevelandQuery).catch(error => {
@@ -83,10 +83,9 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
 
   
   let VAPromise = Promise.resolve({ data: { records: [] } });
-  if (terms.toggleVA) {
+  if (selectedMuseums.indexOf('V&A') >= 0) {
     let VAQuery = `?page_size=100&images_exist=true&q=*`;
     if (terms.type) VAQuery += `&q_object_type=${terms.type}`;
-    // if (terms.page && terms.page % 25 === 0) VAQuery += `&page=${terms.page / 25 + 1}`;
     VAPromise = VAAPI.get(VAQuery).catch(error => {
       console.error("VA API Error:", error);
       return { data: { records: [] } }; 
