@@ -6,12 +6,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { categories, museums } from './consts/sidebarItems';
 
 const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,selectedMuseums}) => {
+
+  useEffect(() => {
+    if (selectedMuseums.length === 0) {
+      setSelectedMuseums(museums);
+    }
+  }, [setSelectedMuseums, selectedMuseums]);
   
   const handleSubmit = () => {
     alert('Selected categories have been submitted!');
