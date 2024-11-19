@@ -12,6 +12,7 @@ import TopMenu from './Components/Navigation/TopBar';
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); 
   const [selectedMuseums, setSelectedMuseums] = useState([]); 
+  console.log(selectedCategories, selectedMuseums, 'in the app')
   
   return (
 <>

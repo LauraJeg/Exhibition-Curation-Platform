@@ -54,28 +54,6 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
       <Toolbar />
       <Divider />
       <List>
-          <ListItem button="true" key='cats' >
-            <ListItemButton>
-              <ListItemText primary='No Categories' />
-            </ListItemButton>
-          </ListItem>
-      </List>
-      <List>
-        {categories.map((category) => (
-          <ListItem key={category}>
-            <ListItemButton>
-              <Checkbox size='small' sx={{ marginLeft: -3 }}
-                checked={selectedCategories.includes(category)}
-                onChange={() => handleCheckboxChangeCat(category)}
-                inputProps={{ 'aria-label': `${category} checkbox` }}
-              />
-              <ListItemText primary={category} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
           <ListItem key='cats' >
             <ListItemButton>
               <ListItemText primary='Museums' />
@@ -96,6 +74,30 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
           </ListItem>
         ))}
       </List>
+      <Divider />
+      <List>
+          <ListItem button="true" key='cats' >
+            <ListItemButton>
+              <ListItemText primary='Categories' />
+            </ListItemButton>
+          </ListItem>
+      </List>
+      <List>
+        {categories.map((category) => (
+          <ListItem key={category}>
+            <ListItemButton>
+              <Checkbox size='small' sx={{ marginLeft: -3 }}
+                checked={selectedCategories.includes(category)}
+                onChange={() => handleCheckboxChangeCat(category)}
+                inputProps={{ 'aria-label': `${category} checkbox` }}
+              />
+              <ListItemText primary={category} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      
       <Box sx={{ marginTop: 3 }}>
         <Button
           variant="contained"

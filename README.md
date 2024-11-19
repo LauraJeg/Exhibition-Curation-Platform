@@ -5,7 +5,7 @@
 [![CSS](https://img.shields.io/badge/-CSS-blueviolet)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 ### News Project link
-Link to the hosted website: https://laurajeg.github.io/Exhibition-Curation-Platform/
+Link to the hosted website: https://exhibition-curation-platform.vercel.app/home
 
 
 
@@ -27,7 +27,7 @@ This project demonstrates the ability to connect a backend API to a frontend app
 
 ### Project Structure
 
-- **`/components`:** Contains React components for different parts of the application such as articles, comments, login, header, etc.
+- **`/components`:** Contains React components for different parts of the application such as artworks, comments, login, header, etc.
 - **`/context`:** Includes context providers and consumers for managing global state within the application.
 - **`/utils`:** Utility functions such as date formatting are stored here.
 - **`App.js`:** Main entry point of the frontend application where routes are defined.

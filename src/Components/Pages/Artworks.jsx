@@ -3,7 +3,7 @@ const terms = {query:"Laura",image_exists:true, page: 1,page_size:15, toggleClev
 
 
 const Artworks = ({selectedCategories, selectedMuseums}) => {
-
+console.log(selectedCategories, selectedMuseums, 'in the artworks')
     return (<>
     <CommonArtCard terms = {terms} selectedCategories={selectedCategories} selectedMuseums={selectedMuseums}/>
     </>

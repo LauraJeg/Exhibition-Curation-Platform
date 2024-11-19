@@ -68,8 +68,8 @@ export const clevelandArtworkCollection =(terms) => {
   });
 }
 
-export const combinedArtwork = (terms,selectedCategories, selectedMuseums) => {
-console.log(selectedCategories, selectedMuseums)
+export const combinedArtwork = (terms, selectedCategories, selectedMuseums) => {
+console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   const parsedData = [];
   let clevelandPromise = Promise.resolve({ data: { data: [] } }); 
   if (terms.toggleCleveland) {

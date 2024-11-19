@@ -65,10 +65,12 @@ const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
       isToggledFavourites(updatedFavourites);
       localStorage.setItem("artworks", JSON.stringify(updatedFavourites));
     }
-    combinedArtwork(terms)
     //multiple artworks
     useEffect(() => {
-      console.log(terms)
+      //grabs params and sends through the api
+      console.log(terms, selectedCategories, selectedMuseums, 'in the artcards')
+    
+    // selectedCategories === undefined? console.log('hello'): selectCat = [...selectedCategories];
 
       combinedArtwork(terms, selectedCategories, selectedMuseums).then((res)=> {
             setResults(res);
@@ -77,7 +79,7 @@ const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
             setError('Failed to load artwork data.');
             setIsLoading(false);
         });
-    }, []);
+    }, [selectedCategories, selectedMuseums]);
 
     const [expanded, setExpanded] = useState(false);
 
