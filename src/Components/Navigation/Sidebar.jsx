@@ -6,34 +6,27 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { categories, museums } from './consts/sidebarItems';
 
-const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,selectedMuseums}) => {
+const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums, selectedMuseums }) => {
+  const [tempSelectedMuseums, setTempSelectedMuseums] = useState([]);
+  const [tempSelectedCategories, setTempSelectedCategories] = useState(selectedCategories);
 
   useEffect(() => {
-    if (selectedMuseums.length === 0) {
-      setSelectedMuseums(museums);
-    }
-  }, [setSelectedMuseums, selectedMuseums]);
-  
+    setTempSelectedMuseums(museums); 
+  }, []);
+
   const handleSubmit = () => {
-    alert('Selected categories have been submitted!');
+    setSelectedMuseums(tempSelectedMuseums);
+    setSelectedCategories(tempSelectedCategories);
+    alert('Selected categories and museums have been submitted!');
   };
 
-  const handleCheckboxChangeCat = (category) => {
-    setSelectedCategories((prevSelected) => {
-      if (prevSelected.includes(category)) {
-        return prevSelected.filter((item) => item !== category);
-      } else {
-        return [...prevSelected, category];
-      }
-    });
-  };
   const handleCheckboxChangeMus = (museum) => {
-    setSelectedMuseums((prevSelected) => {
+    setTempSelectedMuseums((prevSelected) => {
       if (prevSelected.includes(museum)) {
         return prevSelected.filter((item) => item !== museum);
       } else {
@@ -41,9 +34,21 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
       }
     });
   };
-    const drawerWidth = 150;
-    return ( 
-      <Drawer
+
+  const handleCheckboxChangeCat = (category) => {
+    setTempSelectedCategories((prevSelected) => {
+      if (prevSelected.includes(category)) {
+        return prevSelected.filter((item) => item !== category);
+      } else {
+        return [...prevSelected, category];
+      }
+    });
+  };
+
+  const drawerWidth = 150;
+
+  return (
+    <Drawer
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -51,7 +56,7 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
           width: drawerWidth,
           boxSizing: 'border-box',
           backgroundColor: '#D7CEC7',
-          color: '565656'
+          color: '565656',
         },
       }}
       variant="permanent"
@@ -60,18 +65,20 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
       <Toolbar />
       <Divider />
       <List>
-          <ListItem key='cats' >
-            <ListItemButton>
-              <ListItemText primary='Museums' />
-            </ListItemButton>
-          </ListItem>
+        <ListItem key="cats">
+          <ListItemButton>
+            <ListItemText primary="Museums" />
+          </ListItemButton>
+        </ListItem>
       </List>
       <List>
         {museums.map((museum) => (
           <ListItem key={museum}>
             <ListItemButton>
-              <Checkbox size='small' sx={{ marginLeft: -3 }}
-                checked={selectedMuseums.includes(museum)}
+              <Checkbox
+                size="small"
+                sx={{ marginLeft: -3 }}
+                checked={tempSelectedMuseums.includes(museum)}
                 onChange={() => handleCheckboxChangeMus(museum)}
                 inputProps={{ 'aria-label': `${museum} checkbox` }}
               />
@@ -82,18 +89,20 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
       </List>
       <Divider />
       <List>
-          <ListItem button="true" key='cats' >
-            <ListItemButton>
-              <ListItemText primary='Categories' />
-            </ListItemButton>
-          </ListItem>
+        <ListItem button key="categories">
+          <ListItemButton>
+            <ListItemText primary="Categories" />
+          </ListItemButton>
+        </ListItem>
       </List>
       <List>
         {categories.map((category) => (
           <ListItem key={category}>
             <ListItemButton>
-              <Checkbox size='small' sx={{ marginLeft: -3 }}
-                checked={selectedCategories.includes(category)}
+              <Checkbox
+                size="small"
+                sx={{ marginLeft: -3 }}
+                checked={tempSelectedCategories.includes(category)} 
                 onChange={() => handleCheckboxChangeCat(category)}
                 inputProps={{ 'aria-label': `${category} checkbox` }}
               />
@@ -103,19 +112,19 @@ const Sidebar = ({setSelectedCategories, selectedCategories, setSelectedMuseums,
         ))}
       </List>
       <Divider />
-      
+
       <Box sx={{ marginTop: 3 }}>
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
-          disabled={selectedMuseums.length===0}  // Disable if no categories are selected
+          onClick={handleSubmit} 
+          disabled={tempSelectedMuseums.length === 0 && tempSelectedCategories.length === 0}
         >
           Submit Selection
         </Button>
       </Box>
     </Drawer>
-    );
+  );
 };
 
 export default Sidebar;
