@@ -65,12 +65,12 @@ const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
       isToggledFavourites(updatedFavourites);
       localStorage.setItem("artworks", JSON.stringify(updatedFavourites));
     }
-    //multiple artworks
+    //use effect here
     useEffect(() => {
-      //grabs params and sends through the api
+
       console.log(terms, selectedCategories, selectedMuseums, 'in the artcards')
     
-    // selectedCategories === undefined? console.log('hello'): selectCat = [...selectedCategories];
+
 
       combinedArtwork(terms, selectedCategories, selectedMuseums).then((res)=> {
             setResults(res);
@@ -105,7 +105,7 @@ const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
           sx={{ maxWidth: 345, m: 4, backgroundColor: '#ebe6e3' }}>
       <CardHeader
         avatar={
-          <Avatar alt="CM" src={result.avatar} aria-label="museumIcon" />
+          <Avatar alt={result.isClev ? "C" : "V"}  src={result.avatar} aria-label="museumIcon" />
         }
         title={result.title}
         subheader={`Made by: ${result.creator}`}

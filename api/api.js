@@ -86,7 +86,7 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   if (terms.toggleVA) {
     let VAQuery = `?page_size=100&images_exist=true&q=*`;
     if (terms.type) VAQuery += `&q_object_type=${terms.type}`;
-    if (terms.page && terms.page % 25 === 0) VAQuery += `&page=${terms.page / 25 + 1}`;
+    // if (terms.page && terms.page % 25 === 0) VAQuery += `&page=${terms.page / 25 + 1}`;
     VAPromise = VAAPI.get(VAQuery).catch(error => {
       console.error("VA API Error:", error);
       return { data: { records: [] } }; 
