@@ -24,7 +24,6 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
   const handleSubmit = () => {
     setSelectedMuseums(tempSelectedMuseums);
     setSelectedCategories([tempSelectedCategory]);
-    alert('Selected categories and museums have been submitted!');
   };
 
   const handleCheckboxChangeMus = (museum) => {

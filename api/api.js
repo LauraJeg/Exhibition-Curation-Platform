@@ -74,7 +74,7 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   let clevelandPromise = Promise.resolve({ data: { data: [] } }); 
   if (selectedMuseums.indexOf('Cleveland') >= 0) {
     let clevelandQuery = "?q=1&has_image=1&limit=100";
-    if (terms.type) clevelandQuery += `&classification_type=${terms.type}`;
+    if (selectedCategories.length !== 0) clevelandQuery += `&classification_type=${selectedCategories[0]}`;
     clevelandPromise = clevAPI.get(clevelandQuery).catch(error => {
       console.error("Cleveland API Error:", error);
       return { data: { data: [] } }; 
@@ -85,7 +85,7 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   let VAPromise = Promise.resolve({ data: { records: [] } });
   if (selectedMuseums.indexOf('V&A') >= 0) {
     let VAQuery = `?page_size=100&images_exist=true`;
-    if (terms.type) VAQuery += `&q_object_type=${terms.type}`;
+    if (selectedCategories[0]) VAQuery += `&q_object_type=${selectedCategories[0]}`;
     VAPromise = VAAPI.get(VAQuery).catch(error => {
       console.error("VA API Error:", error);
       return { data: { records: [] } }; 

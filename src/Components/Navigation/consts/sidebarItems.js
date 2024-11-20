@@ -28,13 +28,13 @@ export const categoriesSidebarItems = [
 
 export const museumList = ['V & A', 'Cleveland Museum of Art']
 export const categories = [
-    "Paintings",
-    "Sculptures",
-    "Prints",
-    "Textiles",
-    "Ceramics",
-    "Photography",
-    "Drawings"
+    "Painting",
+    "Sculpture",
+    "Print",
+    "Textile",
+    "Ceramic",
+    "Photograph",
+    "Drawing"
   ];
   export const museums = [
     'V&A',
