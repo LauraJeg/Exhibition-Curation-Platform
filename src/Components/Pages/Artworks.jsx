@@ -1,101 +1,81 @@
-import CommonArtCard from "../common/CommonArtCard"
+import React, { useState } from 'react';
+import CommonArtCard from "../common/CommonArtCard";
 import { textInvi } from "../Navigation/consts/sidebarItems";
 import Typography from '@mui/material/Typography';
-const terms = {toggleCleveland: true, toggleVA: true}
-import { useState } from 'react';
-import { Checkbox, FormControl, InputLabel, Select, MenuItem, Box, FormControlLabel , Button} from '@mui/material';
+import { Box, FormControl, InputLabel, Select, MenuItem, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 
+const Artworks = ({ selectedCategories, selectedMuseums }) => {
+  const [sortBy, setSortBy] = useState('artist'); 
+  const [sortOrder, setSortOrder] = useState('asc'); 
+  const [selectedSortBy, setSelectedSortBy] = useState('artist'); // Temporary state
+  const [selectedSortOrder, setSelectedSortOrder] = useState('asc'); // Temporary state
 
+  console.log(selectedCategories, selectedMuseums, 'in the artworks');
 
-const Artworks = ({selectedCategories, selectedMuseums}) => {
-    const [sortBy, setSortBy] = useState('artist'); 
-    const [sortOrder, setSortOrder] = useState('asc'); 
-console.log(selectedCategories, selectedMuseums, 'in the artworks')
   const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
+    setSelectedSortBy(event.target.value); // Update temporary state
   };
 
-  const handleSortOrderChange = (order) => {
-    setSortOrder(order);
+  const handleSortOrderChange = (event) => {
+    setSelectedSortOrder(event.target.value); // Update temporary state
   };
 
-//sort this out! put into api
+//implement api logic
   const handleSortApply = () => {
-    console.log(`Sorting by ${sortBy} in ${sortOrder} order`);
+    setSortBy(selectedSortBy); 
+    setSortOrder(selectedSortOrder); 
+    console.log(`Sorting by ${selectedSortBy} in ${selectedSortOrder} order`);
   };
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 , marginLeft:'300px', marginTop: '40px'}}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2, marginLeft: '300px', marginTop: '40px' }}>
 
         <FormControl sx={{ marginRight: 2 }}>
           <InputLabel>Sort By</InputLabel>
-          <Select value={sortBy} onChange={handleSortByChange} label="Sort By">
+          <Select 
+            value={selectedSortBy} 
+            onChange={handleSortByChange} 
+            label="Sort By">
             <MenuItem value="artist">Artist</MenuItem>
             <MenuItem value="date">Date</MenuItem>
           </Select>
         </FormControl>
 
+        <FormControl sx={{ marginLeft: 2 }}>
+          <RadioGroup
+            row
+            aria-labelledby="sort-order-group-label"
+            name="sort-order-group"
+            value={selectedSortOrder}
+            onChange={handleSortOrderChange}
+          >
+            <FormControlLabel value="asc" control={<Radio />} label="Asc" />
+            <FormControlLabel value="desc" control={<Radio />} label="Desc" />
+          </RadioGroup>
+        </FormControl>
 
-          <FormControlLabel
-          control={
-            <Checkbox
-              checked={sortOrder === 'asc'}
-              onChange={() => handleSortOrderChange('asc')}
-              name="asc"
-              color="primary"
-              sx={{
-                '&.Mui-checked': {
-                  color: '#565656',
-                },
-                borderRadius: '50%',
-                width: 24,
-                height: 24,
-                border: '1px solid #ddd',
-              }}
-            />
-          }
-          label="Asc"
-        />
-        
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={sortOrder === 'desc'}
-              onChange={() => handleSortOrderChange('desc')}
-              name="desc"
-              color="primary"
-              sx={{
-                '&.Mui-checked': {
-                  color: '#565656',
-                },
-                borderRadius: '50%',
-                width: 24,
-                height: 24,
-                border: '1px solid #ddd',
-              }}
-            />
-          }
-          label="Desc"
-        />
-
-
- 
         <Button
           variant="contained"
-          color="#76323F"
+          color="#565656"
           onClick={handleSortApply}
           sx={{ marginLeft: 2 }}
         >
           Apply Sorting
         </Button>
       </Box>
-    <CommonArtCard terms = {terms} selectedCategories={selectedCategories} selectedMuseums={selectedMuseums}/>
-    <Typography color="white">
-    {textInvi}
-</Typography>
+
+      <CommonArtCard 
+        terms={{ toggleCleveland: true, toggleVA: true }} 
+        selectedCategories={selectedCategories} 
+        selectedMuseums={selectedMuseums} 
+        sortBy={sortBy} 
+        sortOrder={sortOrder} 
+      />
+      
+      <Typography color="white">{textInvi}</Typography>
     </>
-    );
+  );
 };
 
 export default Artworks;

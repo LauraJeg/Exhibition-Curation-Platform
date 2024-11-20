@@ -42,7 +42,7 @@ const ExpandMore = styled((props) => {
 }));
   
     
-const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
+const CommonArtCard = ({terms, selectedCategories, selectedMuseums,sortBy, sortOrder}) => {
     const [results, setResults] = useState();
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -72,14 +72,14 @@ const CommonArtCard = ({terms, selectedCategories, selectedMuseums}) => {
     
 
 
-      combinedArtwork(terms, selectedCategories, selectedMuseums).then((res)=> {
+      combinedArtwork(terms, selectedCategories, selectedMuseums, sortBy, sortOrder).then((res)=> {
             setResults(res);
             setIsLoading(false);
         }).catch((err)=>{
             setError('Failed to load artwork data.');
             setIsLoading(false);
         });
-    }, [selectedCategories, selectedMuseums]);
+    }, [selectedCategories, selectedMuseums, sortBy, sortOrder]);
 
     const [expanded, setExpanded] = useState(false);
 
