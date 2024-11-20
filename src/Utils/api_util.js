@@ -52,3 +52,25 @@ export const parsingVAData = (art)=> {
         sortableDate: sortedDate
     }
 }
+
+export const sortByArtist = (data, sortOrder) => {
+
+    const sortedData = data.sort((a, b) => {
+        const artistA = a.creator.toLowerCase();
+        const artistB = b.creator.toLowerCase();
+
+    if (artistA < artistB) {
+        return sortOrder === 'asc' ? -1 : 1;
+    }
+    if (artistA > artistB) {
+        return sortOrder === 'asc' ? 1 : -1;
+    }
+    return 0;
+});
+return sortedData;
+}
+
+export const sortByDate = (data, sortOrder) => {
+    console.log(data, sortOrder)
+    return 'hello'
+}

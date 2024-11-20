@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parsingClevData, parsingVAData } from '../src/Utils/api_util';
+import { parsingClevData, parsingVAData, sortByArtist, sortByDate } from '../src/Utils/api_util';
 
 const VAAPI = axios.create({
   baseURL: `https://api.vam.ac.uk/v2/objects/search?`
@@ -94,7 +94,7 @@ console.log(terms, selectedCategories, selectedMuseums, sortBy, sortOrder, 'in t
 
  
   return Promise.all([clevelandPromise, VAPromise]).then((res) => {
-  console.log(res[1].data.records)
+  console.log(res[1].data.records, '<<Cleveland')
     if (selectedMuseums.indexOf('Cleveland') >= 0) {
       res[0].data.data.forEach(element => {
         parsedData.push(parsingClevData(element));
@@ -109,5 +109,16 @@ console.log(res[0].data.data)
     }
 
     return parsedData;
+  })
+  .then((data)=> {
+    console.log(data)
+    const sortedData = []
+    if (sortBy==='artist'){
+      sortedData.push([...sortByArtist(data, sortOrder)])
+    } else {
+      sortedData.push([...sortByDate(data, sortOrder)])
+    }
+    return data
   });
+ 
 };
