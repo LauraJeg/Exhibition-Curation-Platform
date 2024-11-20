@@ -114,7 +114,7 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
       <Box sx={{ marginTop: 3 }}>
         <Button
           variant="contained"
-          color="primary"
+          color="565656"
           onClick={handleSubmit} 
           disabled={tempSelectedMuseums.length === 0 && !tempSelectedCategory} 
         >
