@@ -12,6 +12,7 @@ export const parsingClevData = (art) => {
         image : art.images.web.url,
         key: art.accession_number,
         avatar: "/home/mashca/northcoders/projects/Exhibition-Curation-Platform/curator-project/assets/ClevSymbol.jpeg",
+        sortableDate: art.sortable_date
     }
 }
 
@@ -19,6 +20,23 @@ export const parsingVAData = (art)=> {
     const onDisplay = art.onDisplay? 'This piece is displayed in the V & A now':'This piece is in storage'
     const creator = art._primaryMaker.name === undefined? 'Unknown': art._primaryMaker.name
     const dated = art._primaryDate.length === 0? 'Unknown': art._primaryDate
+
+    //putting the date into a format that I can sort it into
+
+    const numbers = [];
+
+    const foundNumbers = art._primaryDate.match(/-?\d+/g);
+    
+    if (foundNumbers) {
+        numbers.push(...foundNumbers.map(Number)); 
+    }
+
+    const foundBC = art._primaryDate.match(/\bbc\b/gi);
+    let sortedDate = numbers.length > 0 ? numbers[0] : null;
+    if (foundBC && sortedDate !== null) {
+        sortedDate = -sortedDate;
+    }
+    
 
     return{
         isClev : false,
@@ -30,6 +48,7 @@ export const parsingVAData = (art)=> {
         description: 'No description was provided for this piece.',
         key: art.systemNumber,
         creationDate: dated,
-        avatar: "'../../../assets/V&Asymbol.jpg"
+        avatar: "'../../../assets/V&Asymbol.jpg",
+        sortableDate: sortedDate
     }
 }

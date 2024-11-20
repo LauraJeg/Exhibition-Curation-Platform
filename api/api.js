@@ -84,7 +84,7 @@ console.log(terms, selectedCategories, selectedMuseums, sortBy, sortOrder, 'in t
   
   let VAPromise = Promise.resolve({ data: { records: [] } });
   if (selectedMuseums.indexOf('V&A') >= 0) {
-    let VAQuery = `?page_size=100&images_exist=true`;
+    let VAQuery = `?page_size=100&images_exist=true&order_by=${sortBy}&order_sort=${sortOrder}`;
     if (selectedCategories[0]) VAQuery += `&q_object_type=${selectedCategories[0]}`;
     VAPromise = VAAPI.get(VAQuery).catch(error => {
       console.error("VA API Error:", error);
@@ -101,7 +101,7 @@ console.log(terms, selectedCategories, selectedMuseums, sortBy, sortOrder, 'in t
       });
     }
 
-
+console.log(res[0].data.data)
     if (selectedMuseums.indexOf('V&A') >= 0) {
       res[1].data.records.forEach(element => {
         parsedData.push(parsingVAData(element));
