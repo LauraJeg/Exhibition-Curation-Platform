@@ -13,22 +13,24 @@ import { categories, museums } from './consts/sidebarItems';
 
 const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums, selectedMuseums }) => {
   const [tempSelectedMuseums, setTempSelectedMuseums] = useState([]);
-  const [tempSelectedCategories, setTempSelectedCategories] = useState(selectedCategories);
+  const [tempSelectedCategory, setTempSelectedCategory] = useState(selectedCategories[0] || '');
 
   useEffect(() => {
+   
     setTempSelectedMuseums(museums); 
-  }, []);
+    setTempSelectedCategory(selectedCategories[0] || ''); 
+  }, [selectedCategories]);
 
   const handleSubmit = () => {
     setSelectedMuseums(tempSelectedMuseums);
-    setSelectedCategories(tempSelectedCategories);
+    setSelectedCategories([tempSelectedCategory]);
     alert('Selected categories and museums have been submitted!');
   };
 
   const handleCheckboxChangeMus = (museum) => {
     setTempSelectedMuseums((prevSelected) => {
       if (prevSelected.includes(museum)) {
-        return prevSelected.filter((item) => item !== museum);
+        return prevSelected.filter((item) => item !== museum); 
       } else {
         return [...prevSelected, museum];
       }
@@ -36,13 +38,8 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
   };
 
   const handleCheckboxChangeCat = (category) => {
-    setTempSelectedCategories((prevSelected) => {
-      if (prevSelected.includes(category)) {
-        return prevSelected.filter((item) => item !== category);
-      } else {
-        return [...prevSelected, category];
-      }
-    });
+  
+    setTempSelectedCategory(category); 
   };
 
   const drawerWidth = 150;
@@ -64,8 +61,9 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
     >
       <Toolbar />
       <Divider />
+
       <List>
-        <ListItem key="cats">
+        <ListItem key="museums">
           <ListItemButton>
             <ListItemText primary="Museums" />
           </ListItemButton>
@@ -74,12 +72,11 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
       <List>
         {museums.map((museum) => (
           <ListItem key={museum}>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleCheckboxChangeMus(museum)}>
               <Checkbox
                 size="small"
                 sx={{ marginLeft: -3 }}
-                checked={tempSelectedMuseums.includes(museum)}
-                onChange={() => handleCheckboxChangeMus(museum)}
+                checked={tempSelectedMuseums.includes(museum)} 
                 inputProps={{ 'aria-label': `${museum} checkbox` }}
               />
               <ListItemText primary={museum} />
@@ -87,7 +84,9 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
           </ListItem>
         ))}
       </List>
+
       <Divider />
+
       <List>
         <ListItem button key="categories">
           <ListItemButton>
@@ -98,12 +97,11 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
       <List>
         {categories.map((category) => (
           <ListItem key={category}>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleCheckboxChangeCat(category)}> 
               <Checkbox
                 size="small"
                 sx={{ marginLeft: -3 }}
-                checked={tempSelectedCategories.includes(category)} 
-                onChange={() => handleCheckboxChangeCat(category)}
+                checked={tempSelectedCategory === category} 
                 inputProps={{ 'aria-label': `${category} checkbox` }}
               />
               <ListItemText primary={category} />
@@ -111,6 +109,7 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
           </ListItem>
         ))}
       </List>
+
       <Divider />
 
       <Box sx={{ marginTop: 3 }}>
@@ -118,7 +117,7 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
           variant="contained"
           color="primary"
           onClick={handleSubmit} 
-          disabled={tempSelectedMuseums.length === 0 && tempSelectedCategories.length === 0}
+          disabled={tempSelectedMuseums.length === 0 && !tempSelectedCategory} 
         >
           Submit Selection
         </Button>
@@ -128,3 +127,4 @@ const Sidebar = ({ setSelectedCategories, selectedCategories, setSelectedMuseums
 };
 
 export default Sidebar;
+
