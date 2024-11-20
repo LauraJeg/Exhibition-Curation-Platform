@@ -38,7 +38,7 @@ export const parsingVAData = (art)=> {
     }
     
 
-    return{
+    return {
         isClev : false,
         onDisplay: onDisplay,
         type: art.objectType,
@@ -72,5 +72,24 @@ return sortedData;
 
 export const sortByDate = (data, sortOrder) => {
     console.log(data, sortOrder)
-    return 'hello'
+    const sortedData = data.sort((a, b) => {
+        const dateA = a.sortableDate;
+        const dateB = b.sortableDate; 
+
+       // handle 'Unknown' dates
+       if (dateA === 'Unknown') {
+        return 1; 
+    }
+    if (dateB === 'Unknown') {
+        return -1;
+    }
+
+    if (sortOrder === 'asc') {
+        return dateA - dateB; 
+    } else if (sortOrder === 'desc') {
+        return dateB - dateA;
+    }
+});
+
+    return sortedData;
 }
