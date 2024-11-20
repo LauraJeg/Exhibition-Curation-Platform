@@ -84,7 +84,7 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
   
   let VAPromise = Promise.resolve({ data: { records: [] } });
   if (selectedMuseums.indexOf('V&A') >= 0) {
-    let VAQuery = `?page_size=100&images_exist=true&q=*`;
+    let VAQuery = `?page_size=100&images_exist=true`;
     if (terms.type) VAQuery += `&q_object_type=${terms.type}`;
     VAPromise = VAAPI.get(VAQuery).catch(error => {
       console.error("VA API Error:", error);
@@ -94,15 +94,15 @@ console.log(terms, selectedCategories, selectedMuseums, 'in the api')
 
  
   return Promise.all([clevelandPromise, VAPromise]).then((res) => {
-  
-    if (terms.toggleCleveland) {
+  console.log(res[1].data.records)
+    if (selectedMuseums.indexOf('Cleveland') >= 0) {
       res[0].data.data.forEach(element => {
         parsedData.push(parsingClevData(element));
       });
     }
 
 
-    if (terms.toggleVA) {
+    if (selectedMuseums.indexOf('V&A') >= 0) {
       res[1].data.records.forEach(element => {
         parsedData.push(parsingVAData(element));
       });

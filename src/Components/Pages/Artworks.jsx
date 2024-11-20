@@ -1,5 +1,5 @@
 import CommonArtCard from "../common/CommonArtCard"
-const terms = {query:"Laura",image_exists:true, page: 1,page_size:15, toggleCleveland: true, toggleVA: true}
+const terms = {query:"Laura",image_exists:true, page: 1,page_size:15, toggleCleveland: true, toggleVA: true, type: 'Sculpture'}
 
 
 const Artworks = ({selectedCategories, selectedMuseums}) => {
