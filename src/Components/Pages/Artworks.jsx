@@ -26,7 +26,7 @@ console.log(selectedCategories, selectedMuseums, 'in the artworks')
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 , marginLeft:'160px', marginTop: '20px'}}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 , marginLeft:'300px', marginTop: '40px'}}>
 
         <FormControl sx={{ marginRight: 2 }}>
           <InputLabel>Sort By</InputLabel>

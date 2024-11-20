@@ -44,9 +44,11 @@ const Slideshow = () => {
 
   if (storedData.length === 0) {
     return (
-      <Typography variant="h6" sx={{ textAlign: 'center', marginTop: '20px' }}>
-        No artworks saved in localStorage.
+      <Box sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '300px' }}>
+      <Typography variant="h5" sx={{ textAlign: 'center', color: 'text.secondary' }}>
+        No artworks have been saved. Please favourite artworks to view in the slideshow.
       </Typography>
+    </Box>
     );
   }
 
